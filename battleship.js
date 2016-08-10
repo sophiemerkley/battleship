@@ -5,16 +5,20 @@ $(document).ready(function(){
 
     //when click a grid space
     $("td").on("click",
-      //add the class of grey to the squares
       function(){
         if (torpedosLeft > 0) {
+          //add the class of grey to the squares
           $(this).addClass("grey");
+          //turns space off after clikced
           $(this).off("click");
+          //decrease the number of torpedoes by one
           torpedosLeft = torpedosLeft - 1;
+          //printing number of torpedos left to the dom
           $("#torpedos").text(torpedosLeft);
 
         }
       });
+
 
 
 });//end of document.ready
@@ -22,10 +26,31 @@ $(document).ready(function(){
 //start of model
 //create variable for torpedos left and set it to 0
 var torpedosLeft = 25;
-// Pupose: create a function to keep track of torpedos left
-//Signature: nothing --> number
-//Examples: torpedoDecrementer() --> 24;
+//create the array for the board
+var board =[[0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0]];
 
+//create variable for ships
+var ships = 0;
+//Purpose: create a function to place five ships randomly on the board
+//Signature: nothing ---> return 2 numbers that correspond to positions on the board
+//Example: placeShips() ----> [0,3],[1,4],[2,6],[7,5],[1,8]
+function placeShips() {
+  while (ships < 5 ){
+    var row = Math.floor((Math.random()*10));
+    var column = Math.floor((Math.random()*10));
+    ships = ships + 1;
+    board[row][column]= -1;
+  }
+}
 
 // Purpose: to create gameBoard using loops
 // Signature: nothing ->
