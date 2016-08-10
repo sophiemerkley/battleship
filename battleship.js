@@ -9,8 +9,10 @@ $(document).ready(function(){
       function(){
         if (torpedosLeft > 0) {
           $(this).addClass("grey");
+          $(this).off("click");
           torpedosLeft = torpedosLeft - 1;
           $("#torpedos").text(torpedosLeft);
+
         }
       });
 
