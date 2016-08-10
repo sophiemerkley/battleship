@@ -2,6 +2,13 @@
 $(document).ready(function(){
   //calls makeBoard function to create the game board grid
   makeBoard();
+
+  //when click a grid space
+  $("td").on("click",
+    function(){
+      $(this).addClass("grey");
+    });
+
 });//end of document.ready
 
 //start of model
