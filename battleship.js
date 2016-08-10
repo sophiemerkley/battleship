@@ -2,11 +2,18 @@
 $(document).ready(function(){
   //calls makeBoard function to create the game board grid
   makeBoard();
+  placeShips();
 
     //when click a grid space
     $("td").on("click",
       function(){
         if (torpedosLeft > 0) {
+          var clicked = $(this).attr("id");
+          clicked.split("");
+          console.log(clicked);
+          if (board[clicked[0]][clicked[1]] === -1) {
+            $("#" + clicked[0] + clicked[1]).addClass("hit");
+          }
           //add the class of grey to the squares
           $(this).addClass("grey");
           //turns space off after clikced
@@ -40,17 +47,29 @@ var board =[[0,0,0,0,0,0,0,0,0,0],
 
 //create variable for ships
 var ships = 0;
+var row;
+var column;
 //Purpose: create a function to place five ships randomly on the board
 //Signature: nothing ---> return 2 numbers that correspond to positions on the board
 //Example: placeShips() ----> [0,3],[1,4],[2,6],[7,5],[1,8]
 function placeShips() {
   while (ships < 5 ){
-    var row = Math.floor((Math.random()*10));
-    var column = Math.floor((Math.random()*10));
+    row = Math.floor((Math.random()*10));
+    column = Math.floor((Math.random()*10));
     ships = ships + 1;
     board[row][column]= -1;
   }
 }
+
+var shipsHit = 0;
+
+//Purpose: Create a function that takes the position shot at and sees if there was a ship there or not.
+//Signature: [x],[y] -> boolean
+//Example: shootTorpedo(x, y) -> true/false
+
+
+
+
 
 // Purpose: to create gameBoard using loops
 // Signature: nothing ->
