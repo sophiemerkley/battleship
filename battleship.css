@@ -46,6 +46,17 @@ body {
   font-family: 'Teko', sans-serif;
 }
 
+.torpedos2 {
+  font-size: 30px;
+  font-family: 'Teko', sans-serif;
+}
+
+
 .hereTheyAre {
   background-color: #00B894;
+}
+
+.restart > img{
+  width: 200px;
+  height: auto;
 }
