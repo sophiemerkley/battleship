@@ -39,6 +39,9 @@ $(document).ready(function(){
           torpedosLeft = torpedosLeft - 1;
           //printing number of torpedos left to the dom
           $("#torpedos").text(torpedosLeft);
+          if (torpedosLeft === 0) {
+          $("#loser").text("You Lose!")
+        }
 
 
         }
