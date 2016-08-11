@@ -5,47 +5,46 @@ $(document).ready(function(){
   //calls the placeShips function to place ships on the board
   placeShips();
 
-    //when click a grid space
-    $("td").on("click",
-      //run a function
-      function(){
-        //checks to see if there are torpedos left
-        if (torpedosLeft > 0) {
-          //get the #id of the td that has been clicked
-          var clicked = $(this).attr("id");
-          //splits the #id from a string into an array
-          clicked.split("");
-          //prints clicked to the console for testing purposes
-          console.log(clicked);
-          //checks to see if the td that has been clicked has a ship
-          if (board[clicked[0]][clicked[1]] === aShipIsHere) {
-            //adds a class of hit to the td
-            $("#" + clicked[0] + clicked[1]).addClass("hit");
-            //increments the count of ships that have been hit
-            shipsHit = shipsHit + 1;
-            //displays the count of ships hit in the view
-            $("#hits").text(shipsHit);
-            //checks to see if 5 ships have been hit
-            if (shipsHit === 5) {
-              //add winning message
-              $("#winner").text("You WIN!");
-            }
-          }
-          //add the class of grey to the squares
-          $(this).addClass("grey");
-          //turns space off after clikced
-          $(this).off("click");
-          //decrease the number of torpedoes by one
-          torpedosLeft = torpedosLeft - 1;
-          //printing number of torpedos left to the dom
-          $("#torpedos").text(torpedosLeft);
-          if (torpedosLeft === 0) {
-          $("#loser").text("You Lose!")
+  //when click a grid space
+  $("td").on("click",
+  //run a function
+  function(){
+    //checks to see if there are torpedos left
+    if (torpedosLeft > 0) {
+      //get the #id of the td that has been clicked
+      var clicked = $(this).attr("id");
+      //splits the #id from a string into an array
+      clicked.split("");
+      //prints clicked to the console for testing purposes
+      console.log(clicked);
+      //checks to see if the td that has been clicked has a ship
+      if (board[clicked[0]][clicked[1]] === aShipIsHere) {
+        //adds a class of hit to the td
+        $("#" + clicked[0] + clicked[1]).addClass("hit");
+        //increments the count of ships that have been hit
+        shipsHit = shipsHit + 1;
+        //displays the count of ships hit in the view
+        $("#hits").text(shipsHit);
+        //checks to see if 5 ships have been hit
+        if (shipsHit === 5) {
+          //add winning message
+          $("#winner").text("You WIN!");
         }
-
-
-        }
-      });
+      }
+      //add the class of grey to the squares
+      $(this).addClass("grey");
+      //turns space off after clikced
+      $(this).off("click");
+      //decrease the number of torpedoes by one
+      torpedosLeft = torpedosLeft - 1;
+      //printing number of torpedos left to the dom
+      $("#torpedos").text(torpedosLeft);
+      if (torpedosLeft === 0) {
+        $("#loser").text("You Lose!");
+        revealShips();
+      }
+    }
+  });
 
 
 
@@ -56,15 +55,15 @@ $(document).ready(function(){
 var torpedosLeft = 25;
 //create the array for the board
 var board =[[0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0]];
+[0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0]];
 
 //create variable for ships
 var ships = 0;
@@ -86,7 +85,7 @@ function placeShips() {
     //increments the count of ships for the while loop
     ships = ships + 1;
     //assigns the row and column to a ship position
-    board[row][column]= aShipIsHere;
+    board[row][column] = aShipIsHere;
   }
 }
 
@@ -99,10 +98,23 @@ function makeBoard() {
   for (var row=0; row<10; row++) {
     //create and append 10 tables rows to the table
     $("#gameBoard").append("<tr></tr>");
-      //create a for loop for the tds
-      for (var column=0; column<10; column++) {
+    //create a for loop for the tds
+    for (var column=0; column<10; column++) {
       //create and append 10 table datas to the last row in loop
       $("tr").last().append('<td id = "' + row + column + '"></td>');
+    }
+  }
+}
+
+// Purpose: to find the location/coordinates of the placed ships and add a class to the td
+// Signature: nothing --> string
+// Example: revealShips() --> $('#' + x + y).addClass("hereTheyAre")
+function revealShips() {
+  for (var row = 0; row < 10; row ++) {
+    for ( var col = 0; col < 10; col ++) {
+      if (board[row][col] === aShipIsHere) {
+        $("#" + row + col).addClass("hereTheyAre");
       }
+    }
   }
 }
