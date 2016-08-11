@@ -5,6 +5,7 @@ $(document).ready(function(){
   //calls the placeShips function to place ships on the board
   placeShips();
 
+
   //when click a grid space
   $("td").on("click",
   //run a function
@@ -71,6 +72,7 @@ var ships = 0;
 var shipsHit = 0;
 //create a variable for where a ship has been placed and set the value to -1
 var aShipIsHere = -1;
+var noShip = -2
 
 //Purpose: create a function to place five ships randomly on the board
 //Signature: nothing ---> return 2 numbers that correspond to positions on the board
@@ -82,10 +84,92 @@ function placeShips() {
     var row = Math.floor((Math.random()*10));
     //finds a random number for the column
     var column = Math.floor((Math.random()*10));
+
+    //add and if statement to check to see if there is already a ship in the same spot
+    if (board[row][column] === aShipIsHere || board[row][column] === noShip) {
+      //returns to the top of the loop
+      continue;
+    }
     //increments the count of ships for the while loop
     ships = ships + 1;
     //assigns the row and column to a ship position
     board[row][column] = aShipIsHere;
+    //run findBlockedSpaces function
+    findBlockedSpaces(column,row);
+  }
+}
+
+//Purpose: to create a function that finds the four spaces around the ship
+//Signature:[row][column] -> [row][column][row][column] [row][column][row][column]
+//Example: findBlockedSpaces(1,1) -> 0,1 2,1 1,0 1,2
+
+function findBlockedSpaces(col, row) {
+  if ((row > 0 && row < 9) &&
+      (col > 0 && col < 9) &&
+      (board[row - 1][col] != -1) &&
+      (board[row + 1][col] != -1) &&
+      (board[row][col - 1] != -1) &&
+      (board[row][col + 1] != -1)){
+    board[row - 1][col] = noShip;
+    board[row + 1][col] = noShip;
+    board[row][col - 1] = noShip;
+    board[row][col + 1] = noShip;
+  }
+  if (row === 0 && (col > 0 && col < 9) &&
+     (board[row + 1][col] != -1) &&
+     (board[row][col - 1] != -1) &&
+     (board[row][col + 1] != -1)){
+    board[row + 1][col] = noShip;
+    board[row][col - 1] = noShip;
+    board[row][col + 1] = noShip;
+  }
+  if (row === 9 && (col > 0 && col < 9)&&
+     (board[row - 1][col] != -1) &&
+     (board[row][col - 1] != -1) &&
+     (board[row][col + 1] != -1)){
+    board[row - 1][col] = noShip;
+    board[row][col - 1] = noShip;
+    board[row][col + 1] = noShip;
+  }
+  if ((row > 0 && row < 9) && col === 0 &&
+      (board[row - 1][col] != -1) &&
+      (board[row + 1][col] != -1) &&
+      (board[row][col + 1] != -1)){
+    board[row - 1][col] = noShip;
+    board[row + 1][col] = noShip;
+    board[row][col + 1] = noShip;
+  }
+  if ((row > 0 && row < 9) && col === 9 &&
+     (board[row - 1][col] != -1) &&
+     (board[row + 1][col] != -1) &&
+     (board[row][col - 1] != -1)){
+    board[row - 1][col] = noShip;
+    board[row + 1][col] = noShip;
+    board[row][col - 1] = noShip;
+  }
+  if (row === 0 && col === 0 &&
+     (board[row + 1][col] != -1) &&
+     (board[row][col + 1] != -1)){
+    board[row + 1][col] = noShip;
+    board[row][col + 1] = noShip;
+  }
+  if (row === 0 && col === 9 &&
+     (board[row + 1][col] != -1) &&
+     (board[row][col - 1] != -1)){
+    board[row + 1][col] = noShip;
+    board[row][col - 1] = noShip;
+  }
+  if (row === 9 && col === 0 &&
+     (board[row - 1][col] != -1)&&
+     (board[row][col + 1] != -1)){
+    board[row - 1][col] = noShip;
+    board[row][col + 1] = noShip;
+  }
+  if (row === 9 && col === 9 &&
+     (board[row - 1][col] != -1) &&
+     (board[row][col - 1] != -1)){
+    board[row - 1][col] = noShip;
+    board[row][col - 1] = noShip;
   }
 }
 
