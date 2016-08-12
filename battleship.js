@@ -16,16 +16,14 @@ $(document).ready(function(){
     //checks to see if there are torpedos left
     if (torpedosLeft > 0) {
       //get the #id of the td that has been clicked
-      var clicked = $(this).attr("id");
-      //splits the #id from a string into an array
-      clicked.split("");
+      var clickedBox = $(this).attr("id");
       //prints clicked to the console for testing purposes
-      console.log(clicked);
+      console.log(clickedBox);
       //checks to see if the td that has been clicked has a ship
-      if (board[clicked[0]][clicked[1]] === aShipIsHere) {
+      if (board[clickedBox[0]][clickedBox[1]] === aShipIsHere) {
         //adds a class of hit to the td
-        $("#" + clicked[0] + clicked[1]).addClass("hit");
-        $("#" + clicked[0] + clicked[1]).html('<i class="fa fa-bomb fa-3x"></i>');
+        $(this).addClass("hit");
+        $(this).html('<i class="fa fa-bomb fa-3x"></i>');
         //increments the count of ships that have been hit
         shipsHit = shipsHit + 1;
         //displays the count of ships hit in the view
@@ -140,10 +138,10 @@ function findBlockedSpaces(col, row) {
   //sets the four spaces around inside squares to -2/noShip
   if ((row > 0 && row < 9) &&
       (col > 0 && col < 9) &&
-      (board[row - 1][col] != -1) &&
-      (board[row + 1][col] != -1) &&
-      (board[row][col - 1] != -1) &&
-      (board[row][col + 1] != -1)){
+      (board[row - 1][col] != aShipIsHere) &&
+      (board[row + 1][col] != aShipIsHere) &&
+      (board[row][col - 1] != aShipIsHere) &&
+      (board[row][col + 1] != aShipIsHere)){
     board[row - 1][col] = noShip;
     board[row + 1][col] = noShip;
     board[row][col - 1] = noShip;
@@ -151,65 +149,65 @@ function findBlockedSpaces(col, row) {
   }
   //sets the 3 spaces around the top row squares to -2/noShip
   if (row === 0 && (col > 0 && col < 9) &&
-     (board[row + 1][col] != -1) &&
-     (board[row][col - 1] != -1) &&
-     (board[row][col + 1] != -1)){
+     (board[row + 1][col] != aShipIsHere) &&
+     (board[row][col - 1] != aShipIsHere) &&
+     (board[row][col + 1] != aShipIsHere)){
     board[row + 1][col] = noShip;
     board[row][col - 1] = noShip;
     board[row][col + 1] = noShip;
   }
   //sets the 3 spaces around the bottom row squares to -2/noShip
   if (row === 9 && (col > 0 && col < 9)&&
-     (board[row - 1][col] != -1) &&
-     (board[row][col - 1] != -1) &&
-     (board[row][col + 1] != -1)){
+     (board[row - 1][col] != aShipIsHere) &&
+     (board[row][col - 1] != aShipIsHere) &&
+     (board[row][col + 1] != aShipIsHere)){
     board[row - 1][col] = noShip;
     board[row][col - 1] = noShip;
     board[row][col + 1] = noShip;
   }
   //sets the 3 spaces around the first column squares to -2/noShip
   if ((row > 0 && row < 9) && col === 0 &&
-      (board[row - 1][col] != -1) &&
-      (board[row + 1][col] != -1) &&
-      (board[row][col + 1] != -1)){
+      (board[row - 1][col] != aShipIsHere) &&
+      (board[row + 1][col] != aShipIsHere) &&
+      (board[row][col + 1] != aShipIsHere)){
     board[row - 1][col] = noShip;
     board[row + 1][col] = noShip;
     board[row][col + 1] = noShip;
   }
   //sets the 3 spaces around the bottom row squares to -2/noShip
   if ((row > 0 && row < 9) && col === 9 &&
-     (board[row - 1][col] != -1) &&
-     (board[row + 1][col] != -1) &&
-     (board[row][col - 1] != -1)){
+     (board[row - 1][col] != aShipIsHere) &&
+     (board[row + 1][col] != aShipIsHere) &&
+     (board[row][col - 1] != aShipIsHere)){
     board[row - 1][col] = noShip;
     board[row + 1][col] = noShip;
     board[row][col - 1] = noShip;
   }
   //sets the 2 spaces around a corner to -2/noShip
   if (row === 0 && col === 0 &&
-     (board[row + 1][col] != -1) &&
-     (board[row][col + 1] != -1)){
+     (board[row + 1][col] != aShipIsHere) &&
+     (board[row][col + 1] != aShipIsHere)){
     board[row + 1][col] = noShip;
     board[row][col + 1] = noShip;
   }
   //sets the 2 spaces around a corner to -2/noShip
   if (row === 0 && col === 9 &&
-     (board[row + 1][col] != -1) &&
-     (board[row][col - 1] != -1)){
+     (board[row + 1][col] != aShipIsHere) &&
+     (board[row][col - 1] != aShipIsHere)){
     board[row + 1][col] = noShip;
     board[row][col - 1] = noShip;
   }
   //sets the 2 spaces around a corner to -2/noShip
   if (row === 9 && col === 0 &&
-     (board[row - 1][col] != -1)&&
-     (board[row][col + 1] != -1)){
+     (board[row - 1][col] != aShipIsHere)&&
+     (board[row][col + 1] != aShipIsHere)){
     board[row - 1][col] = noShip;
     board[row][col + 1] = noShip;
   }
   //sets the 2 spaces around a corner to -2/noShip
   if (row === 9 && col === 9 &&
-     (board[row - 1][col] != -1) &&
-     (board[row][col - 1] != -1)){
+     (board[row - 1][col] != aShipIsHere) &&
+     (board[row][col - 1] != aShipIsHere)){
     board[row - 1][col] = noShip;
     board[row][col - 1] = noShip;
   }
