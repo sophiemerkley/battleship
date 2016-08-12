@@ -11,13 +11,12 @@ table {
 body {
   background-image: url("http://cf.shacknews.com/images/20120314/battleship_screen4_21413.jpg");
   background-size: cover;
-  padding-top: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .container {
   background-color: white;
-  padding-top:  10px;
-  padding-bottom: 15px;
 }
 
 .jumbotron{
@@ -38,6 +37,7 @@ body {
 
 .loser {
   background-color: #606060;
+  padding-bottom: -5px;
 }
 
 .torpedos {
@@ -50,6 +50,10 @@ body {
   font-family: 'Teko', sans-serif;
 }
 
+.torpedos3 {
+  font-size: 25px;
+  font-family: 'Teko', sans-serif;
+}
 
 .hereTheyAre {
   background-color: #00B894;
@@ -57,7 +61,7 @@ body {
 }
 
 .restart > img{
-  width: 200px;
+  width: 150px;
   height: auto;
 }
 
@@ -67,4 +71,14 @@ body {
 
 .padding {
   padding: 0 30px;
+}
+
+#hasbro {
+  padding-top: 25px;
+  height: 100px;
+  width: 100px;
+}
+
+#com {
+  padding-top: 35px;
 }
