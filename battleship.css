@@ -25,8 +25,7 @@ body {
   background-position: center;
   background-size: cover;
   height: 300px;
-  width: auto;
-
+  margin-bottom: -1px;
 }
 
 .grey {
@@ -54,9 +53,18 @@ body {
 
 .hereTheyAre {
   background-color: #00B894;
+
 }
 
 .restart > img{
   width: 200px;
   height: auto;
+}
+
+.restart {
+  background-color: white;
+}
+
+.padding {
+  padding: 0 30px;
 }

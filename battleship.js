@@ -1,11 +1,14 @@
 //controller
 $(document).ready(function(){
+
   //calls makeBoard function to create the game board grid
   makeBoard();
   //calls the placeShips function to place ships on the board
   placeShips();
-
-
+  //call a function to set the game up upon reset
+  //setUpGame();
+  //create a function to set the game up
+//function setUpGame(){
   //when click a grid space
   $("td").on("click",
   //run a function
@@ -22,14 +25,17 @@ $(document).ready(function(){
       if (board[clicked[0]][clicked[1]] === aShipIsHere) {
         //adds a class of hit to the td
         $("#" + clicked[0] + clicked[1]).addClass("hit");
+        $("#" + clicked[0] + clicked[1]).html('<i class="fa fa-bomb fa-3x"></i>');
         //increments the count of ships that have been hit
         shipsHit = shipsHit + 1;
         //displays the count of ships hit in the view
         $("#hits").text(shipsHit);
         //checks to see if 5 ships have been hit
-        if (shipsHit === 5) {
+        if (shipsHit === 5 && torpedosLeft >= 0) {
           //add winning message
           $("#winner").text("You WIN!");
+          //reset topedo count when game is over
+          //torpedosLeft = 0;
         }
       }
       //add the class of grey to the squares
@@ -40,15 +46,41 @@ $(document).ready(function(){
       torpedosLeft = torpedosLeft - 1;
       //printing number of torpedos left to the dom
       $("#torpedos").text(torpedosLeft);
-      if (torpedosLeft === 0) {
+      if (torpedosLeft === 0 && shipsHit < 5) {
         $("#loser").text("You Lose!");
+        //reset torpedos left at end of game
+        //torpedosLeft = 0
+        //calls a function to reveal the ships at the end of the game
         revealShips();
       }
     }
   });
-
-
-
+//}
+/*
+//clicking the torpedo to restart the game
+$("#restart").on("click", function(){
+  $("td").removeClass("grey");
+  $("td").removeClass("hit");
+  $("td").removeClass("hereTheyAre");
+  $("#torpedos").text(torpedosLeft);
+  board=[[0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0]];
+  torpedosLeft = 5;
+  shipsHit = 0;
+  placeShips();
+  setUpGame();
+  $("#winner").text("");
+  $("#loser").text("");
+});
+*/
 });//end of document.ready
 
 //start of model
@@ -72,6 +104,7 @@ var ships = 0;
 var shipsHit = 0;
 //create a variable for where a ship has been placed and set the value to -1
 var aShipIsHere = -1;
+//create a variable that sets the value of the surrounding spaces to -2
 var noShip = -2
 
 //Purpose: create a function to place five ships randomly on the board
@@ -104,6 +137,7 @@ function placeShips() {
 //Example: findBlockedSpaces(1,1) -> 0,1 2,1 1,0 1,2
 
 function findBlockedSpaces(col, row) {
+  //sets the four spaces around inside squares to -2/noShip
   if ((row > 0 && row < 9) &&
       (col > 0 && col < 9) &&
       (board[row - 1][col] != -1) &&
@@ -115,6 +149,7 @@ function findBlockedSpaces(col, row) {
     board[row][col - 1] = noShip;
     board[row][col + 1] = noShip;
   }
+  //sets the 3 spaces around the top row squares to -2/noShip
   if (row === 0 && (col > 0 && col < 9) &&
      (board[row + 1][col] != -1) &&
      (board[row][col - 1] != -1) &&
@@ -123,6 +158,7 @@ function findBlockedSpaces(col, row) {
     board[row][col - 1] = noShip;
     board[row][col + 1] = noShip;
   }
+  //sets the 3 spaces around the bottom row squares to -2/noShip
   if (row === 9 && (col > 0 && col < 9)&&
      (board[row - 1][col] != -1) &&
      (board[row][col - 1] != -1) &&
@@ -131,6 +167,7 @@ function findBlockedSpaces(col, row) {
     board[row][col - 1] = noShip;
     board[row][col + 1] = noShip;
   }
+  //sets the 3 spaces around the first column squares to -2/noShip
   if ((row > 0 && row < 9) && col === 0 &&
       (board[row - 1][col] != -1) &&
       (board[row + 1][col] != -1) &&
@@ -139,6 +176,7 @@ function findBlockedSpaces(col, row) {
     board[row + 1][col] = noShip;
     board[row][col + 1] = noShip;
   }
+  //sets the 3 spaces around the bottom row squares to -2/noShip
   if ((row > 0 && row < 9) && col === 9 &&
      (board[row - 1][col] != -1) &&
      (board[row + 1][col] != -1) &&
@@ -147,24 +185,28 @@ function findBlockedSpaces(col, row) {
     board[row + 1][col] = noShip;
     board[row][col - 1] = noShip;
   }
+  //sets the 2 spaces around a corner to -2/noShip
   if (row === 0 && col === 0 &&
      (board[row + 1][col] != -1) &&
      (board[row][col + 1] != -1)){
     board[row + 1][col] = noShip;
     board[row][col + 1] = noShip;
   }
+  //sets the 2 spaces around a corner to -2/noShip
   if (row === 0 && col === 9 &&
      (board[row + 1][col] != -1) &&
      (board[row][col - 1] != -1)){
     board[row + 1][col] = noShip;
     board[row][col - 1] = noShip;
   }
+  //sets the 2 spaces around a corner to -2/noShip
   if (row === 9 && col === 0 &&
      (board[row - 1][col] != -1)&&
      (board[row][col + 1] != -1)){
     board[row - 1][col] = noShip;
     board[row][col + 1] = noShip;
   }
+  //sets the 2 spaces around a corner to -2/noShip
   if (row === 9 && col === 9 &&
      (board[row - 1][col] != -1) &&
      (board[row][col - 1] != -1)){
@@ -172,7 +214,6 @@ function findBlockedSpaces(col, row) {
     board[row][col - 1] = noShip;
   }
 }
-
 
 // Purpose: to create gameBoard using loops
 // Signature: nothing ->
@@ -185,7 +226,7 @@ function makeBoard() {
     //create a for loop for the tds
     for (var column=0; column<10; column++) {
       //create and append 10 table datas to the last row in loop
-      $("tr").last().append('<td id = "' + row + column + '"></td>');
+      $("tr").last().append('<td id = "' + row + column + '" class = "text-center"></td>');
     }
   }
 }
@@ -194,10 +235,16 @@ function makeBoard() {
 // Signature: nothing --> string
 // Example: revealShips() --> $('#' + x + y).addClass("hereTheyAre")
 function revealShips() {
+  //create a for loop for the tr
   for (var row = 0; row < 10; row ++) {
+    //create a for loop for the columns
     for ( var col = 0; col < 10; col ++) {
+      //check to see of the is a ship in the square
       if (board[row][col] === aShipIsHere) {
+        //add the class of hereTheyAre to the squares with ships
         $("#" + row + col).addClass("hereTheyAre");
+        //add a ship icon to the squares
+        $("#" + row + col).html('<i class="fa fa-anchor fa-3x"></i>');
       }
     }
   }

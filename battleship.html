@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Battleship</title>
+    <link rel="stylesheet" href="font-awesome.min.css">
     <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -29,6 +30,8 @@
         <div class="jumbotron">
         <!-- <h1>Battleship</h1> -->
         </div>
+        <p class="torpedos padding">Game Rules:</p>
+        <p class="torpedos2 padding">Travel across the sea on your Battleship looking for enemy ships. You have 25 torpedos to use. Ships will not be directly above, below or to the left or right of each other. Click a square to begin your adventure. Good Luck Sailor!</p>
         <div class="col-sm-8">
           <table id="gameBoard">
 
@@ -40,8 +43,8 @@
           <p class="torpedos" id="torpedos">25</p>
           <p class="torpedos">Hits:</p>
           <p class="torpedos" id="hits">0</p>
-          <p class="restart text-center"><img src="http://u0v052dm9wl3gxo0y3lx0u44wz.wpengine.netdna-cdn.com/wp-content/uploads/2013/04/Thales-Lightweight-Multirole-Missile-LMM-01.jpg"/></p>
-          <p class="torpedos2">Click the torpedo to restart the game.</p>
+          <p class="restart text-center" id="restart"><img src="http://u0v052dm9wl3gxo0y3lx0u44wz.wpengine.netdna-cdn.com/wp-content/uploads/2013/04/Thales-Lightweight-Multirole-Missile-LMM-01.jpg"/></p>
+          <!--<p class="torpedos2">Click the torpedo to restart the game.</p>-->
         </div>
         <div class="row">
           <p class="torpedos" id="winner"></p>
